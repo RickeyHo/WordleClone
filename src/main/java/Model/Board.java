@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Board {
 
+    private boolean isWinner;
+
     public String getAnswer() {
         if (attempts == 6){
 
@@ -20,6 +22,18 @@ public class Board {
 
     private final LetterTile[][] grid = new LetterTile[6][5];
 
+    public LetterTile[][] getKeyboard() {
+        return keyboard.clone();
+    }
+
+    private final LetterTile[][] keyboard = {
+        { new LetterTile('Q'), new LetterTile('W'), new LetterTile('E'), new LetterTile('R'), new LetterTile('T'), new LetterTile('Y'), new LetterTile('U'), new LetterTile('I'), new LetterTile('O'), new LetterTile('P') },
+        { new LetterTile(' '), new LetterTile('A'), new LetterTile('S'), new LetterTile('D'), new LetterTile('F'), new LetterTile('G'), new LetterTile('H'), new LetterTile('J'), new LetterTile('K'), new LetterTile('L'), new LetterTile(' ') },
+        { new LetterTile(' '), new LetterTile(' '), new LetterTile('Z'), new LetterTile('X'), new LetterTile('C'), new LetterTile('V'), new LetterTile('B'), new LetterTile('N'), new LetterTile('M'), new LetterTile(' '), new LetterTile(' ') }
+    };
+
+
+
     public int getAttempts() {
         return attempts;
     }
@@ -30,6 +44,8 @@ public class Board {
 
 
     public Board(File file){
+
+        this.isWinner = false;
 
         this.fiveLetterWords = new HashMap<>();
 
@@ -78,7 +94,7 @@ public class Board {
 
 
         boolean[] charMatched = new boolean[5];
-        boolean isWinner = true;
+        this.isWinner = true;
         for (int i = 0; i < 5; i++){
 
             //System.out.println(word[i].getCharacter().equals(answer.charAt(i)));
@@ -88,14 +104,29 @@ public class Board {
             if (word[i].getCharacter().equals(answer.charAt(i))) {
                 word[i].setStatus(Status.GREEN);
                 charMatched[i] = true;
+
+                for (LetterTile[] row: keyboard){
+
+                    for (LetterTile tile: row){
+
+                        if (tile.getCharacter().equals(answer.charAt(i))){
+
+                            tile.setStatus(Status.GREEN);
+                            break;
+
+                        }
+
+                    }
+
+                }
+
             } else {
 
-                isWinner = false;
+                this.isWinner = false;
 
             }
         }
 
-        System.out.println("++++++++++++++++++++++++");
 
         for (int f = 0; f < 5; f++) {
 
@@ -119,6 +150,20 @@ public class Board {
                 if (characterFound) {
 
                     word[f].setStatus(Status.YELLOW);
+                    for (LetterTile[] row: keyboard){
+
+                        for (LetterTile tile: row){
+
+                            if (tile.getCharacter().equals(word[f].getCharacter())){
+
+                                tile.setStatus(Status.YELLOW);
+                                break;
+
+                            }
+
+                        }
+
+                    }
 
                 }
             }
@@ -138,4 +183,9 @@ public class Board {
     public LetterTile[][] getGrid() {
         return grid.clone();
     }
+
+    public boolean isWinner() {
+        return isWinner;
+    }
+    
 }
