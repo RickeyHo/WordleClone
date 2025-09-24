@@ -22,14 +22,17 @@ public class WordleView {
         GameControl control = new GameControl();
 
         JFrame jFrame = new JFrame("Wordle");
-        jFrame.setSize(950, 700);
+        jFrame.setSize(450, 800);
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
-        JPanel jPanel = new JPanel();
+        JPanel tableKeyboardPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(new GridLayout());
 
-        JTextField textField = new JTextField(5);
+        JTextField inputField = new JTextField(5);
+        inputField.setFont(new Font("Arial", Font.BOLD, 50));
+        inputField.setHorizontalAlignment(JTextField.CENTER);
         JTextField messages = new JTextField(40);
         messages.setEditable(false);
         messages.setBackground(new Color(30, 30, 30));
@@ -56,7 +59,15 @@ public class WordleView {
 
         WordleTable wordleView = new WordleTable();
         KeyboardTable keyboard = new KeyboardTable();
+        keyboard.setModel(new DefaultTableModel(control.board.getKeyboard(), KBcolNames) {
 
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return false;
+            }
+
+        });
 
         wordleView.setFont(new Font("Arial", Font.BOLD, 50));
         wordleView.setRowHeight(65);
@@ -67,10 +78,9 @@ public class WordleView {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(e.getActionCommand());
                 if (e.getActionCommand().equals("Submit")) {
                     try {
-                        control.submit(textField.getText().toUpperCase());
+                        control.submit(inputField.getText().toUpperCase());
                         wordleView.setDefaultRenderer(Object.class, renderer);
                         wordleView.setModel(new DefaultTableModel(control.board.getGrid(), colNames) {
 
@@ -108,7 +118,13 @@ public class WordleView {
                 }
                 if (e.getActionCommand().equals("Load Previous Save")){
 
-                    control.loadPrevGame();
+                    try {
+                        control.loadPrevGame();
+}
+                    catch (Exception ex) {
+                        messages.setText("No previous save");
+                        throw new RuntimeException(ex);
+                    }
                     wordleView.setDefaultRenderer(Object.class, renderer);
                     wordleView.setModel(new DefaultTableModel(control.board.getGrid(), colNames) {
 
@@ -128,20 +144,30 @@ public class WordleView {
 
         };
         button.addActionListener(actionListener);
-        textField.addActionListener(actionListener);
+        inputField.addActionListener(actionListener);
         saveButton.addActionListener(actionListener);
         loadSaveButton.addActionListener(actionListener);
         wordleView.setModel(model);
         SwingUtilities.updateComponentTreeUI(jFrame);
 
-        jPanel.add(wordleView);
-        jPanel.add(textField);
-        jPanel.add(button);
-        jPanel.add(saveButton);
-        jPanel.add(loadSaveButton);
-        jPanel.add(keyboard);
-        jPanel.add(messages);
-        jPanel.setBackground(new Color(30, 30, 30));
+        tableKeyboardPanel.setBorder(BorderFactory.createEmptyBorder(35, 35, 0, 35));
+        tableKeyboardPanel.setLayout(new BoxLayout(tableKeyboardPanel, BoxLayout.Y_AXIS));
+        tableKeyboardPanel.add(wordleView);
+        tableKeyboardPanel.add(inputField);
+        buttonPanel.setBackground(new Color(30, 30, 30));
+
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10,10));
+        buttonPanel.add(button);
+        buttonPanel.add(saveButton);
+        buttonPanel.add(loadSaveButton);
+        tableKeyboardPanel.add(keyboard);
+        tableKeyboardPanel.add(messages);
+        tableKeyboardPanel.setBackground(new Color(30, 30, 30));
+
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
+        jPanel.add(tableKeyboardPanel);
+        jPanel.add(buttonPanel);
 
         jFrame.add(jPanel);
         jFrame.getContentPane().setBackground(Color.black);

@@ -36,17 +36,12 @@ public class GameControl {
 
 
     }
-    public void loadPrevGame(){
+    public void loadPrevGame() throws Exception{
 
-        try {
-            Scanner scanner = new Scanner(new File("savedGames/previousGame.json"));
-            String jsonContent = scanner.nextLine();
-            Gson gson = new Gson();
-            this.board = gson.fromJson(jsonContent, (this.board).getClass());
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Scanner scanner = new Scanner(new File("savedGames/previousGame.json"));
+        String jsonContent = scanner.nextLine();
+        Gson gson = new Gson();
+        this.board = gson.fromJson(jsonContent, (this.board).getClass());
 
 
     }
