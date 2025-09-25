@@ -8,6 +8,9 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
 public class WordleTable extends JTable {
+
+    public boolean isAccessible = false;
+
     @Override
     public Class<?> getColumnClass(int column) {
 
@@ -42,25 +45,48 @@ public class WordleTable extends JTable {
                     isSelected, hasFocus,
                     row, column);
 
-            component.setForeground(Color.white);
+            if (!this.isAccessible) {
+                component.setForeground(Color.white);
 
+                if (tile.getStatus() == Status.BLACK) {
 
-            if (tile.getStatus() == Status.BLACK) {
+                    component.setBackground(Color.gray);
 
-                component.setBackground(Color.gray);
+                }
+                if (tile.getStatus() == Status.GREEN) {
+
+                    component.setBackground(new Color(95, 153, 87));
+
+                }
+                if (tile.getStatus() == Status.YELLOW) {
+
+                    component.setBackground(new Color(217, 180, 59));
+
+                }
+
+            } else {
+
+                if (tile.getStatus() == Status.BLACK) {
+
+                    component.setForeground(Color.white);
+                    component.setBackground(Color.black);
+
+                }
+                if (tile.getStatus() == Status.GREEN) {
+
+                    component.setForeground(Color.black);
+                    component.setBackground(Color.white);
+
+                }
+                if (tile.getStatus() == Status.YELLOW) {
+
+                    component.setForeground(Color.white);
+                    component.setBackground(Color.gray);
+
+                }
+
 
             }
-            if (tile.getStatus() == Status.GREEN) {
-
-                component.setBackground(new Color(95, 153, 87));
-
-            }
-            if (tile.getStatus() == Status.YELLOW) {
-
-                component.setBackground(new Color(217, 180, 59));
-
-            }
-
 
         } else {
 

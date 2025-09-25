@@ -20,9 +20,10 @@ public class WordleView {
     public static void main(String[] args) throws Exception {
 
         GameControl control = new GameControl();
+        boolean accessibilityMode = false;
 
         JFrame jFrame = new JFrame("Wordle");
-        jFrame.setSize(450, 800);
+        jFrame.setSize(550, 800);
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
@@ -42,6 +43,8 @@ public class WordleView {
         JButton button = new JButton("Submit");
         JButton saveButton = new JButton("Save & Quit");
         JButton loadSaveButton = new JButton("Load Previous Save");
+        JButton accessButton = new JButton("Accessibility");
+
 
         String[] colNames = {"Col 1", "Col 2", "Col 3", "Col 4", "Col 5"};
         String[] KBcolNames = {"Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6", "Col 7", "Col 8", "Col 9", "Col 10"};
@@ -57,7 +60,11 @@ public class WordleView {
 
         };
 
+
         WordleTable wordleView = new WordleTable();
+
+
+
         KeyboardTable keyboard = new KeyboardTable();
         keyboard.setModel(new DefaultTableModel(control.board.getKeyboard(), KBcolNames) {
 
@@ -148,6 +155,20 @@ public class WordleView {
 
                 }
 
+                if (e.getActionCommand().equals("Accessibility")){
+
+                    wordleView.isAccessible = !wordleView.isAccessible;
+                    wordleView.setModel(new DefaultTableModel(control.board.getGrid(), colNames) {
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+
+                            return false;
+                        }
+
+                    });
+                }
+
             }
 
         };
@@ -155,6 +176,7 @@ public class WordleView {
         inputField.addActionListener(actionListener);
         saveButton.addActionListener(actionListener);
         loadSaveButton.addActionListener(actionListener);
+        accessButton.addActionListener(actionListener);
         wordleView.setModel(model);
         SwingUtilities.updateComponentTreeUI(jFrame);
 
@@ -168,6 +190,7 @@ public class WordleView {
         buttonPanel.add(button);
         buttonPanel.add(saveButton);
         buttonPanel.add(loadSaveButton);
+        buttonPanel.add(accessButton);
         tableKeyboardPanel.add(keyboard);
         tableKeyboardPanel.add(messages);
         tableKeyboardPanel.setBackground(new Color(30, 30, 30));
