@@ -16,6 +16,7 @@ public class KeyboardTable extends JTable {
     }
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) { //I learned how to do this from this thread https://stackoverflow.com/questions/58598303/jtable-cell-render-based-on-content
+
         Object value = getValueAt(row, column);
 
         boolean isSelected = false;
@@ -41,24 +42,28 @@ public class KeyboardTable extends JTable {
                     isSelected, hasFocus,
                     row, column);
 
+            component.setForeground(Color.white);
+
             if (tile.getStatus() == Status.BLACK){
 
-                component.setForeground(Color.white);
-                component.setBackground(Color.gray);
+                component.setBackground(Color.black);
 
             }
             if (tile.getStatus() == Status.GREEN){
 
-                component.setForeground(Color.white);
                 component.setBackground(new Color(95, 153, 87));
 
             }
-            if (tile.getStatus() == Status.YELLOW){
+            if (tile.getStatus() == Status.YELLOW) {
 
-                component.setForeground(Color.white);
                 component.setBackground(new Color(217, 180, 59));
+            }
+            if (tile.getStatus() == Status.GREY){
+
+                component.setBackground(Color.gray);
 
             }
+
 
 
         } else {

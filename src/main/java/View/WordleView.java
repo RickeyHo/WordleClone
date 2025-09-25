@@ -106,7 +106,15 @@ public class WordleView {
 
                             messages.setText("GAME OVER - The answer was " + control.board.getAnswer().toUpperCase());
 
+
                         }
+
+                        if (control.board.isWinner()){
+
+                            messages.setText("Congratulations, you win.");
+
+                        }
+
                     } catch (RuntimeException ex) {
                         messages.setText(ex.getCause().getMessage());
                     }

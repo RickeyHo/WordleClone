@@ -27,9 +27,9 @@ public class Board {
     }
 
     private final LetterTile[][] keyboard = {
-        { new LetterTile('Q'), new LetterTile('W'), new LetterTile('E'), new LetterTile('R'), new LetterTile('T'), new LetterTile('Y'), new LetterTile('U'), new LetterTile('I'), new LetterTile('O'), new LetterTile('P') },
-        { new LetterTile(' '), new LetterTile('A'), new LetterTile('S'), new LetterTile('D'), new LetterTile('F'), new LetterTile('G'), new LetterTile('H'), new LetterTile('J'), new LetterTile('K'), new LetterTile('L'), new LetterTile(' ') },
-        { new LetterTile(' '), new LetterTile(' '), new LetterTile('Z'), new LetterTile('X'), new LetterTile('C'), new LetterTile('V'), new LetterTile('B'), new LetterTile('N'), new LetterTile('M'), new LetterTile(' '), new LetterTile(' ') }
+            { new LetterTile('Q', Status.GREY), new LetterTile('W', Status.GREY), new LetterTile('E', Status.GREY), new LetterTile('R', Status.GREY), new LetterTile('T', Status.GREY), new LetterTile('Y', Status.GREY), new LetterTile('U', Status.GREY), new LetterTile('I', Status.GREY), new LetterTile('O', Status.GREY), new LetterTile('P', Status.GREY) },
+            { new LetterTile(' ', Status.GREY), new LetterTile('A', Status.GREY), new LetterTile('S', Status.GREY), new LetterTile('D', Status.GREY), new LetterTile('F', Status.GREY), new LetterTile('G', Status.GREY), new LetterTile('H', Status.GREY), new LetterTile('J', Status.GREY), new LetterTile('K', Status.GREY), new LetterTile('L', Status.GREY), new LetterTile(' ', Status.GREY) },
+            { new LetterTile(' ', Status.GREY), new LetterTile(' ', Status.GREY), new LetterTile('Z', Status.GREY), new LetterTile('X', Status.GREY), new LetterTile('C', Status.GREY), new LetterTile('V', Status.GREY), new LetterTile('B', Status.GREY), new LetterTile('N', Status.GREY), new LetterTile('M', Status.GREY), new LetterTile(' ', Status.GREY), new LetterTile(' ', Status.GREY) }
     };
 
 
@@ -164,6 +164,24 @@ public class Board {
                         }
 
                     }
+
+                } else {
+
+                    for (LetterTile[] row: keyboard){
+
+                        for (LetterTile tile: row){
+
+                            if (tile.getCharacter().equals(word[f].getCharacter())){
+
+                                tile.setStatus(Status.BLACK);
+                                break;
+
+                            }
+
+                        }
+
+                    }
+
 
                 }
             }

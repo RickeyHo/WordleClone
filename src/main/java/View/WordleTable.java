@@ -42,21 +42,21 @@ public class WordleTable extends JTable {
                     isSelected, hasFocus,
                     row, column);
 
+            component.setForeground(Color.white);
+
+
             if (tile.getStatus() == Status.BLACK) {
 
-                component.setForeground(Color.white);
                 component.setBackground(Color.gray);
 
             }
             if (tile.getStatus() == Status.GREEN) {
 
-                component.setForeground(Color.white);
                 component.setBackground(new Color(95, 153, 87));
 
             }
             if (tile.getStatus() == Status.YELLOW) {
 
-                component.setForeground(Color.white);
                 component.setBackground(new Color(217, 180, 59));
 
             }
