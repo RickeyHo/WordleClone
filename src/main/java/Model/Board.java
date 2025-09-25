@@ -1,4 +1,6 @@
 package Model;
+import org.junit.jupiter.api.function.Executable;
+
 import java.util.HashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +20,7 @@ public class Board {
         return "";
     }
 
-    private final String answer;
+    private String answer;
 
     private final LetterTile[][] grid = new LetterTile[6][5];
 
@@ -40,7 +42,6 @@ public class Board {
 
     private int attempts = 0;
     private final HashMap<String, Boolean> fiveLetterWords;
-
 
 
     public Board(File file){
@@ -65,8 +66,15 @@ public class Board {
         this.answer = ((String) wordsArr[Math.abs(new Random().nextInt() % fiveLetterWords.keySet().size())]).toUpperCase();
     }
 
+    public Board(File file, String answer){
 
-    public void tryWord(String submission) throws Exception {
+        this(file);
+        this.answer = answer;
+
+    }
+
+
+    public Executable tryWord(String submission) throws Exception {
         if (attempts >= 6){
 
             throw new RuntimeException("Out of attempts.");
@@ -193,7 +201,7 @@ public class Board {
         attempts++;
 
 
-
+        return null;
     }
 
 
