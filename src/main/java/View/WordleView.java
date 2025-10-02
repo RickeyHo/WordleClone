@@ -23,7 +23,7 @@ public class WordleView {
         boolean accessibilityMode = false;
 
         JFrame jFrame = new JFrame("Wordle");
-        jFrame.setSize(550, 800);
+        jFrame.setSize(700, 800);
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);

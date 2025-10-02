@@ -46,45 +46,50 @@ public class WordleTable extends JTable {
                     row, column);
 
             if (!this.isAccessible) {
-                component.setForeground(Color.white);
 
-                if (tile.getStatus() == Status.BLACK) {
-
-                    component.setBackground(Color.gray);
-
-                }
-                if (tile.getStatus() == Status.GREEN) {
-
-                    component.setBackground(new Color(95, 153, 87));
-
-                }
-                if (tile.getStatus() == Status.YELLOW) {
-
-                    component.setBackground(new Color(217, 180, 59));
-
-                }
+                component = renderer.getTableCellRendererComponent(this, tile.getCharacter(),
+                        isSelected, hasFocus,
+                        row, column);
 
             } else {
 
-                if (tile.getStatus() == Status.BLACK) {
+                String helpSymbol;
 
-                    component.setForeground(Color.white);
-                    component.setBackground(Color.black);
+                if (tile.getStatus() == Status.GREEN){
 
-                }
-                if (tile.getStatus() == Status.GREEN) {
+                    helpSymbol = "✅";
 
-                    component.setForeground(Color.black);
-                    component.setBackground(Color.white);
+                } else if (tile.getStatus() == Status.YELLOW){
 
-                }
-                if (tile.getStatus() == Status.YELLOW) {
+                    helpSymbol = "⭕";
 
-                    component.setForeground(Color.white);
-                    component.setBackground(Color.gray);
+                } else {
+
+                    helpSymbol = "❌";
 
                 }
 
+                component = renderer.getTableCellRendererComponent(this, tile.getCharacter() + " " + helpSymbol,
+                        isSelected, hasFocus,
+                        row, column);
+
+            }
+
+            component.setForeground(Color.white);
+
+            if (tile.getStatus() == Status.BLACK) {
+
+                component.setBackground(Color.gray);
+
+            }
+            if (tile.getStatus() == Status.GREEN) {
+
+                component.setBackground(new Color(95, 153, 87));
+
+            }
+            if (tile.getStatus() == Status.YELLOW) {
+
+                component.setBackground(new Color(217, 180, 59));
 
             }
 
