@@ -162,7 +162,7 @@ public class Board {
 
                         for (LetterTile tile: row){
 
-                            if (tile.getCharacter().equals(word[f].getCharacter())){
+                            if (tile.getCharacter().equals(word[f].getCharacter()) && tile.getStatus() != Status.GREEN){
 
                                 tile.setStatus(Status.YELLOW);
                                 break;
@@ -179,7 +179,7 @@ public class Board {
 
                         for (LetterTile tile: row){
 
-                            if (tile.getCharacter().equals(word[f].getCharacter())){
+                            if (tile.getCharacter().equals(word[f].getCharacter()) && tile.getStatus() != Status.GREEN){
 
                                 tile.setStatus(Status.BLACK);
                                 break;
