@@ -28,6 +28,7 @@ public class GameControl {
 
         try (PrintWriter printWriter = new PrintWriter(new File("savedGames/previousGame.json"))){
             Gson gson = new GsonBuilder().create();
+            System.out.println(String.valueOf(board));
             gson.toJson(board, printWriter);
 
         } catch (FileNotFoundException e) {

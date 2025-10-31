@@ -40,7 +40,7 @@ public class WordleView {
         messages.setForeground(Color.white);
         messages.setHorizontalAlignment(JTextField.CENTER);
 
-        JButton button = new JButton("Submit");
+        JButton submitButton = new JButton("Submit");
         JButton saveButton = new JButton("Save & Quit");
         JButton loadSaveButton = new JButton("Load Previous Save");
         JButton accessButton = new JButton("Accessibility");
@@ -85,7 +85,7 @@ public class WordleView {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getActionCommand().equals("Submit")) {
+                if (e.getSource() == submitButton) {
                     try {
                         control.submit(inputField.getText().toUpperCase());
                         wordleView.setDefaultRenderer(Object.class, renderer);
@@ -126,12 +126,12 @@ public class WordleView {
                         messages.setText(ex.getCause().getMessage());
                     }
                 }
-                if (e.getActionCommand().equals("Save & Quit")){
+                if (e.getSource() == saveButton){
 
                     control.saveGame();
                     System.exit(0);
                 }
-                if (e.getActionCommand().equals("Load Previous Save")){
+                if (e.getSource() == loadSaveButton){
 
                     try {
                         control.loadPrevGame();
@@ -155,7 +155,7 @@ public class WordleView {
 
                 }
 
-                if (e.getActionCommand().equals("Accessibility")){
+                if (e.getSource() == accessButton){
 
                     wordleView.isAccessible = !wordleView.isAccessible;
                     wordleView.setModel(new DefaultTableModel(control.board.getGrid(), colNames) {
@@ -172,7 +172,7 @@ public class WordleView {
             }
 
         };
-        button.addActionListener(actionListener);
+        submitButton.addActionListener(actionListener);
         inputField.addActionListener(actionListener);
         saveButton.addActionListener(actionListener);
         loadSaveButton.addActionListener(actionListener);
@@ -187,7 +187,7 @@ public class WordleView {
         buttonPanel.setBackground(new Color(30, 30, 30));
 
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10,10));
-        buttonPanel.add(button);
+        buttonPanel.add(submitButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(loadSaveButton);
         buttonPanel.add(accessButton);
